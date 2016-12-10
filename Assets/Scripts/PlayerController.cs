@@ -6,7 +6,8 @@ public class PlayerController : MonoBehaviour {
     public float speed;
     public Text countText;
     public Text winText;
-    
+    public GameObject world;
+
     private int count;
 
 	// Use this for initialization
@@ -23,8 +24,12 @@ public class PlayerController : MonoBehaviour {
         float moveVertical = Input.GetAxis("Vertical");
 
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-        
+        movement = world.transform.TransformDirection(movement);
+        print(movement);
         transform.Translate(movement * Time.deltaTime * speed);
+
+        GetComponent<Rigidbody>().AddForce(world.transform.up * -9.8f);
+
     }
 
     void OnTriggerEnter(Collider other)
